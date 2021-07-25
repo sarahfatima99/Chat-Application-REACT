@@ -1,0 +1,10 @@
+html,
+body,
+.app{
+    height: 100vh;
+    background: #f5f6f8;
+    padding: 1em;
+}
+.textcolor{
+    color: #CEDFDD;
+}
