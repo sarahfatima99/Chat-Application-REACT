@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import {Grid, Message} from 'semantic-ui-react'
+import {Grid, Message,ColorPanel,SudePanel,MetaPanel} from 'semantic-ui-react'
 import './App.css';
 
 const App=()=>(
 
 <Grid>
-<ColorPanel/>
-<SudePanel/>
-<Messages></Messages>
-<MetaPanel/>
+
+<Message></Message>
+
 
 
 </Grid>

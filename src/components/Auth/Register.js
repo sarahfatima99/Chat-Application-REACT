@@ -10,7 +10,9 @@ state={
     username:'',
     email:'',
     password:'',
-    passwordConfirmation:''
+    passwordConfirmation:'',
+    errors:[],
+    loading:false
 };
 
 handleChange= event=>{
@@ -18,7 +20,60 @@ handleChange= event=>{
 }
 
 
+isFormValid=()=>{
+
+
+let errors=[];
+let error;
+if(this.isFromEmpty(this.state)){
+error={message:'Full in all fields'};
+this.setState({errors:errors.concat(error)})
+return false;
+}
+
+else if(!this.isPasswordValid(this.state)){
+error={message:'Password is invalid'};
+this.setState({errors:errors.concat(error)});
+return false
+
+}
+
+else{
+    return true
+}
+
+}
+
+
+isFromEmpty=({username,email,password,passwordConfirmation})=>{
+
+return !username.length || !email.length || !password.length || !passwordConfirmation;
+
+}
+
+
+displayErrors=errors=>errors.map((error,i)=><p key={i}>{error.message}</p>)
+
+isPasswordValid=({password,passwordConfirmation})=>{
+
+if(password<6 || passwordConfirmation<6){
+    return false
+}
+else if(password!==passwordConfirmation){
+    return false
+}
+else {
+    return true;
+}
+}
+
 handleSubmit=event=>{
+
+if (this.isFormValid()){
+this.setState({errors:[],loading:true})
+
+
+
 
 event.preventDefault();
 firebase
@@ -26,12 +81,19 @@ firebase
 .createUserWithEmailAndPassword(this.state.email,this.state.password)
 .then(createdUser=>{
     console.log(createdUser)
+    this.setState({loading:false})
 })
-}
 
+.catch(err=>{
+    console.log(err)
+    this.setState({errors:this.state.errors.concat(err),loading:false})
+})
+
+}
+}
     render() {
 
-        const {username,email,password,passwordConfirmation}=this.state;
+        const {username,email,password,passwordConfirmation,errors,loading}=this.state;
 
         return (
             <div>
@@ -53,11 +115,22 @@ firebase
                 <Form.Input fluid name="email" value ={email}icon="mail" iconPosition="left" placeholder="Email" type="email" onChange={this.handleChange}/>
                 <Form.Input fluid name="password" value={password} icon="lock" iconPosition="left" placeholder="Password" type="password" onChange={this.handleChange}/>
                 <Form.Input fluid name="passwordConfirmation" value={passwordConfirmation} icon="repeat" iconPosition="left" placeholder="Confirm Password" type="password" onChange={this.handleChange}/>
-                <Button color="purple" fluid size="large" onClick={this.handleSubmit}>Submit</Button>
+                <Button disabled={loading} className={loading?'loading':''} color="purple" fluid size="large" onClick={this.handleSubmit}>Submit</Button>
             </Segment>
 
             </Form>
+           {this.state.errors.length>0 &&(
+
+            <Message error >
+            <h3>Error</h3>
+            {this.displayErrors(this.state.errors)}
+            </Message>
+
+           )} 
+           
             <Message>Already a user? <Link to= "/login">Login</Link></Message>
+           
+           
             </Grid.Column>
 
                 </Grid>
