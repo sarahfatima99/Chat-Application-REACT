@@ -8,3 +8,17 @@ body,
 .textcolor{
     color: #CEDFDD;
 }
+
+.messages{
+    height:440px ;
+    overflow-y:scroll
+}
+
+.messages__form{
+    position:fixed !important;
+    bottom: 1em;
+    margin: left 120px;
+    left:0;
+    right:1em;
+    z-index:200;
+}
