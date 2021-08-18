@@ -10,8 +10,15 @@ body,
 }
 
 .messages{
-    height:440px ;
+    height:62vh ;
     overflow-y:scroll
+}
+
+
+.messages__progress{
+height:58vh;
+overflow-y: scroll;
+
 }
 
 .messages__form{
@@ -21,4 +28,20 @@ body,
     left:0;
     right:1em;
     z-index:200;
+}
+
+.message__image{
+   padding:1em; 
+}
+.message__self{
+    border-left:2px solid orage;
+    padding-left:8px
+}
+
+.progress__bar{
+    margin: 0.5 0 0 0 !important;
+}
+
+.menu{
+    padding-bottom: 2em;
 }
